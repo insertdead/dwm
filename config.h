@@ -109,6 +109,15 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
+#define STACKKEYS(MOD,ACTION) \
+	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
+	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } },
+	// { MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
+	// { MOD, XK_q,     ACTION##stack, {.i = 0 } }, \
+	// { MOD, XK_a,     ACTION##stack, {.i = 1 } }, \
+	// { MOD, XK_z,     ACTION##stack, {.i = 2 } }, \
+	// { MOD, XK_x,     ACTION##stack, {.i = -1 } },
+
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
@@ -159,8 +168,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY2,                      XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -191,12 +198,15 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_Tab,    togglealttag,   {0} },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
-	{ MODKEY|ShiftMask,             XK_n,      shiftview,      {.i = +1} },
-	{ MODKEY|ShiftMask,             XK_p,      shiftview,      {.i = -1} },
+	{ MODKEY,                       XK_n,      shiftview,      {.i = +1} },
+	{ MODKEY,                       XK_p,      shiftview,      {.i = -1} },
 	/* Application shortcuts */
 	{ MODKEY,                       XK_b,      spawn,          SHCMD("librewolf") },
 	{ MODKEY,                       XK_q,      spawn,          SHCMD("firefox") },
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD(TERMINAL " -e ranger") },
+  /* dmenu/rofi scripts */
+  { MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("dmenufm") },
+  { MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("dmenu_pass") },
   /* Function keys */
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
@@ -207,6 +217,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+	STACKKEYS(MODKEY,                                          focus)
+	STACKKEYS(MODKEY|ShiftMask,                                push)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
   { MODKEY|ShiftMask,             XK_r,      quit,           {1} },
   /* Unused keybindings */

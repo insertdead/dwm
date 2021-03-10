@@ -22,12 +22,12 @@ static char normfgcolor[]           = "#d8dee9";
 static char selfgcolor[]            = "#e5e9f0";
 static char selbordercolor[]        = "#e5e9f0";
 static char selbgcolor[]            = "#4c566a";
-static char col1[]            = "#ffffff";
-static char col2[]            = "#ffffff";
-static char col3[]            = "#ffffff";
-static char col4[]            = "#ffffff";
-static char col5[]            = "#ffffff";
-static char col6[]            = "#ffffff";
+static char col1[]            = "#ebcb8b";
+static char col2[]            = "#bf616a";
+static char col3[]            = "#a3be8c";
+static char col4[]            = "#5e81ac";
+static char col5[]            = "#d08770";
+static char col6[]            = "#b48ead";
 
 enum { SchemeNorm, SchemeCol1, SchemeCol2, SchemeCol3, SchemeCol4,
        SchemeCol5, SchemeCol6, SchemeSel }; /* color schemes */
@@ -46,11 +46,7 @@ static char *colors[][3] = {
 
 static char *const autostart[] = {
   "light-locker", "--lock-on-suspend", "--lock-on-lid",   NULL,
-  "pipewire",                                             NULL,
   "dwmblocks",                                            NULL,
-  "dunst",                                                NULL,
-  "nitrogen", "--restore",                                NULL,
-  "remap",                                                NULL,
   NULL /* terminate */
 };
 
@@ -101,6 +97,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
+#include <X11/XF86keysym.h> /* to add bindings for media keys */
 #define MODKEY Mod4Mask
 #define MODKEY2 Mod1Mask
 #define TAGKEYS(KEY,TAG) \
@@ -204,6 +201,16 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,      spawn,          SHCMD("librewolf") },
 	{ MODKEY,                       XK_q,      spawn,          SHCMD("firefox") },
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD(TERMINAL " -e ranger") },
+  { MODKEY2,                      XK_Print,  spawn,          SHCMD("maim -s ~/Images/screenshots/pic-sel-$(date '+%y%m%d-%H%M-%S').png ") },
+  { MODKEY,                       XK_p,      spawn,          SHCMD("dmenufm") },
+  { MODKEY|ControlMask,          XK_p,      spawn,          SHCMD("rofi-pass") },
+  /* Media keys */
+  { 0, XF86XK_AudioLowerVolume,              spawn,          SHCMD("pamixer -d 5 " "&&" " sigdwmblocks 3") },
+  { 0, XF86XK_AudioRaiseVolume,              spawn,          SHCMD("pamixer -i 5 " "&&" " sigdwmblocks 3") },
+  { 0, XF86XK_AudioMute,                     spawn,          SHCMD("pamixer -t " "&&" " sigdwmblocks 3") },
+  { 0, XF86XK_MonBrightnessDown,             spawn,          SHCMD("brightnessctl s 5%-") },
+  { 0, XF86XK_MonBrightnessUp,               spawn,          SHCMD("brightnessctl s 5%+") },
+  { 0, XK_Print,                             spawn,          SHCMD("maim ~/Images/screenshots/pic-full-$(date '+%y%m%d-%H%M-%S').png ") },
   /* Function keys */
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)

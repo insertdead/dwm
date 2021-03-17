@@ -2,7 +2,15 @@
 
 ## Patches
 Patches are in the patches folder if you are interested in applying them to your
-own build.
+own build. The commit version used is 6.2.
+
+Quick guide to patching your own build:
+```
+git clone https://git.suckless.org/dwm
+cd dwm
+git checkout 6.2 -c new
+patch < NAME_OF_PATCH
+```
 
 ## Installation
 If an error appears please open an issue on the github page.

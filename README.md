@@ -2,7 +2,7 @@
 
 ## Patches
 Patches are in the patches folder if you are interested in applying them to your
-own build. The commit version used is 6.2.
+own build. The dwm version used is `6.2`.
 
 Quick guide to patching your own build:
 ```

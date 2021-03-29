@@ -56,6 +56,8 @@ static const char *tagsalt[] = { "", "", "", "", "", "", ""
 
 #define TERMINAL "alacritty"
 #define TERMCLASS "Alacritty"
+#define BROWSER "brave"
+#define BROWSEREXTRA "firefox"
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -128,22 +130,24 @@ static char *termcmd[]  = { TERMINAL, NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "dwm.normbgcolor",        STRING,  &normbgcolor },
-		{ "dwm.normbordercolor",    STRING,  &normbordercolor },
-		{ "dwm.normfgcolor",        STRING,  &normfgcolor },
-		{ "dwm.selbgcolor",         STRING,  &selbgcolor },
-		{ "dwm.selbordercolor",     STRING,  &selbordercolor },
-		{ "dwm.selfgcolor",         STRING,  &selfgcolor },
+    { "dwm.normbgcolor",        STRING,  &normbgcolor },
+    { "dwm.normbordercolor",    STRING,  &normbordercolor },
+    { "dwm.normfgcolor",        STRING,  &normfgcolor },
+    { "dwm.selbgcolor",         STRING,  &selbgcolor },
+    { "dwm.selbordercolor",     STRING,  &selbordercolor },
+    { "dwm.selfgcolor",         STRING,  &selfgcolor },
     { "dwm.term.cmd",           STRING,  &TERMINAL },
     { "dwm.term.class",         STRING,  &TERMCLASS },
+    { "dwm.browser",            STRING,  &BROWSER },
+    { "dwm.browserextra",       STRING,  &BROWSEREXTRA },
     { "dwm.fonts",              STRING,  &fonts },
     { "dwm.startup",            STRING,  &autostart },
-		{ "dwm.borderpx",           INTEGER, &borderpx },
-		{ "dwm.snap",          	    INTEGER, &snap },
-		{ "dwm.showbar",            INTEGER, &showbar },
-		{ "dwm.topbar",             INTEGER, &topbar },
-		{ "dwm.nmaster",            INTEGER, &nmaster },
-		{ "dwm.resizehints",        INTEGER, &resizehints },
+    { "dwm.borderpx",           INTEGER, &borderpx },
+    { "dwm.snap",               INTEGER, &snap },
+    { "dwm.showbar",            INTEGER, &showbar },
+    { "dwm.topbar",             INTEGER, &topbar },
+    { "dwm.nmaster",            INTEGER, &nmaster },
+    { "dwm.resizehints",        INTEGER, &resizehints },
     { "dwm.gaps.iv",            INTEGER, &gappiv },
     { "dwm.gaps.ih",            INTEGER, &gappih },
     { "dwm.gaps.ov",            INTEGER, &gappov },
@@ -153,7 +157,7 @@ ResourcePref resources[] = {
     { "dwm.systray.pinning",    INTEGER, &systraypinning },
     { "dwm.systray.pinff",      INTEGER, &systraypinningfailfirst },
     { "dwm.systray.spacing",    INTEGER, &systrayspacing },
-		{ "dwm.mfact",      	      FLOAT,   &mfact },
+    { "dwm.mfact",              FLOAT,   &mfact },
 };
 
 /* Include Shiftview and cyclelayout */
@@ -185,7 +189,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, /* tile */
 	{ MODKEY,                       XK_Tab,    setnextlayout,  {0} }, /* Cycle through layouts */
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY,             XK_f,  togglefloating, {0} },
 	{ MODKEY,                       XK_space,  togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -198,8 +202,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_n,      shiftview,      {.i = +1} },
 	{ MODKEY|ShiftMask,             XK_p,      shiftview,      {.i = -1} },
 	/* Application shortcuts */
-	{ MODKEY,                       XK_b,      spawn,          SHCMD("librewolf") },
-	{ MODKEY,                       XK_q,      spawn,          SHCMD("firefox") },
+	{ MODKEY,                       XK_b,      spawn,          SHCMD(BROWSER) },
+	{ MODKEY,                       XK_q,      spawn,          SHCMD("librewolf -P noprivacy") },
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD(TERMINAL " -e ranger") },
   { MODKEY2,                      XK_Print,  spawn,          SHCMD("maim -s ~/Images/screenshots/pic-sel-$(date '+%y%m%d-%H%M-%S').png ") },
   { MODKEY,                       XK_p,      spawn,          SHCMD("dmenufm") },
